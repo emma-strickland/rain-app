@@ -8,17 +8,28 @@ const api = {
 }
 
 function App() {
-  const [query, setQuery] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [rain, setRain] = useState({});
+  const [isRainingToday, setIsRainingToday] = useState('');
+
+  const isRaining = response => {
+    for (let i = 0; i < response.weather.length; i++) {
+        if (response.weather[i].main.toLowerCase().includes("rain")) {
+            return true;
+        }
+    }
+    return false;
+  }
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=imperial&appid=${api.key}`)
+      fetch(`${api.base}weather?zip=${zipCode}&units=imperial&appid=${api.key}`)
         .then(res => res.json())
         .then(result => {
           setRain(result);
-          setQuery('');
-          console.log(result)
+          setZipCode('');
+          // TODO: set to proper value
+          setIsRainingToday(isRaining(result));
         });
     };
   }
@@ -31,8 +42,8 @@ function App() {
             type="text"
             className="search-bar"
             placeholder="Enter zip code"
-            onChange={e => setQuery(e.target.value)}
-            value={query}
+            onChange={e => setZipCode(e.target.value)}
+            value={zipCode}
             onKeyPress={search}
           />
         </div>
@@ -42,12 +53,16 @@ function App() {
               <div className="location">{rain.name}, {rain.sys.country}</div>
               <div className="date">{new Date().toDateString()}</div>
             </div>
-            <div className="rains">
-              <div className="rain-true">{(rain.main === "rain")}
-
-                Yes, it will rain today!</div>
-              <div className="rain-false">No, it will not rain today :(</div>
-            </div>
+            {
+              isRainingToday !== undefined &&
+                <div className="rains">
+                  {
+                    isRainingToday === true
+                      ?  <div className="rain-true">Yes, it will rain today!</div>
+                      : <div className="rain-false">No, it will not rain today :(</div>
+                  }
+                </div>
+            }
           </div>
         ) : ('')}
       </main>
