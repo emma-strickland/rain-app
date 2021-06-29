@@ -1,21 +1,16 @@
 import './App.css';
 import React, { useState } from 'react';
-
-const api = "http://localhost:4000/rainData";
+import config from './config';
 
 function App() {
   const [zipCode, setZipCode] = useState('');
   const [response, setResponse] = useState();
-  //const [error, setError] = useState();
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api}?zip=${zipCode}`)
+      fetch(`${config.API_BASE_URL}/rainData?zip=${zipCode}`)
         .then(res => res.json())
         .then(result => {
-          console.log('result: ', result);
-          // check response code
-          // if 200, set response, otherwise set error
           setResponse(result);
         }).catch(error => {
           console.log('error: ', error);

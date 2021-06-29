@@ -18,8 +18,11 @@ TODO(emmastrickland): write description
 ## App
 
 ### Usage
-```
-cd app
-npm install
-npm start
-```
+1.  Configure dev and prod `API_BASE_URL` variables in `./app/config.js`.
+
+2.  Start the frontend app:
+    ```
+    cd app
+    npm install
+    npm start
+    ```
