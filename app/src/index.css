@@ -16,7 +16,7 @@ body {
 
 main {
   min-height: 100vh;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2)), rgba(0, 0, 0, 0.75);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2)), rgba(116, 116, 116, 0.75);
   padding: 25px;
 }
 
@@ -53,6 +53,11 @@ main {
   font-size: 20px;
   font-weight: 50;
   text-shadow: 1px 1px 1px rgb(126, 126, 126);
+}
+
+.rains {
+  background-color: rgb(193, 211, 223);
+  opacity: 0.5;
 }
 
 .rains .rain-true {

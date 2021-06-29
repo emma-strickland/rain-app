@@ -1,10 +1,21 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import config from './config';
+
+const rainAudio = new Audio("./rain.mp3");
 
 function App() {
   const [zipCode, setZipCode] = useState('');
   const [response, setResponse] = useState();
+
+  useEffect(() => {
+    if (!response) return;
+    if (response.isRainingToday) {
+      rainAudio.play();
+    } else {
+      rainAudio.pause();
+    }
+  }, [response]);
 
   const search = evt => {
     if (evt.key === "Enter") {
@@ -15,7 +26,6 @@ function App() {
         }).catch(error => {
           console.log('error: ', error);
         });
-
     };
   }
 
@@ -35,7 +45,7 @@ function App() {
         {(typeof response != "undefined") ? (
           <div>
             <div className="location-box">
-              <div className="location">{response.city}, {response.country}</div>
+              <div className="location">{response.city}, {response.state}</div>
               <div className="date">{new Date().toDateString()}</div>
             </div>
             <div className="rains">
