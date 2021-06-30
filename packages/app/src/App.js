@@ -51,8 +51,8 @@ function App() {
             <div className="rains">
               {
                 response.isRainingToday === true
-                  ? <div className="rain-true">Yes, it will rain today!</div>
-                  : <div className="rain-false">No, it will not rain today :(</div>
+                  ? <div className="rains-text">Yes, it will rain today!</div>
+                  : <div className="rains-text">No, it will not rain today :(</div>
               }
             </div>
           </div>

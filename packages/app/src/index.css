@@ -57,21 +57,67 @@ main {
 
 .rains {
   background-color: rgb(193, 211, 223);
-  opacity: 0.5;
+  opacity: 0.5;  
+  -moz-animation: fadein 0.5s; /* Firefox < 16 */
+  -ms-animation: fadein 0.5s; /* Internet Explorer */
+  -o-animation: fadein 0.5s; /* Opera < 12.1 */
+  -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+  animation: fadein 0.5s;
 }
 
-.rains .rain-true {
+.rains-text {
   font-size: 30px;
   font-weight: 150;
   margin: 30px auto;
   padding: 50px 25px;
-  text-shadow: 1px 1px 1px rgb(126, 126, 126);
+  text-shadow: 1px 1px 1px rgb(126, 126, 126); 
 }
 
-.rains .rain-false {
-  font-size: 30px;
-  font-weight: 150;
-  margin: 20px auto;
-  padding: 30px 25px;
-  text-shadow: 1px 1px 1px rgb(126, 126, 126);
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
 }

@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build
+  build-frontend:
+    name: Build frontend
     runs-on: ubuntu-latest
     
     steps:
@@ -34,8 +34,8 @@ jobs:
         name: production-files
         path: ./packages/app/build
   
-  deploy:
-    name: Deploy
+  deploy-frontend:
+    name: Deploy frontend
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
