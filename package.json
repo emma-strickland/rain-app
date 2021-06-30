@@ -1,0 +1,17 @@
+{
+    "name": "rain-app-monorepo",
+    "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "backend:build": "yarn workspace api build",
+        "backend:install": "yarn workspace api install",
+        "backend:start": "yarn workspace api start",
+        "frontend:build": "yarn workspace app build",
+        "frontend:install": "yarn workspace app install",
+        "frontend:start": "yarn workspace app start"
+    },
+    "workspaces": [
+        "packages/*"
+    ]
+}
