@@ -48,12 +48,14 @@ function App() {
               <div className="location">{response.city}, {response.state}</div>
               <div className="date">{new Date().toDateString()}</div>
             </div>
-            <div className="rains">
-              {
-                response.isRainingToday === true
-                  ? <div className="rains-text">Yes, it will rain today!</div>
-                  : <div className="rains-text">No, it will not rain today :(</div>
-              }
+            <div className="rains-container">
+              <div className="rains">
+                {
+                  response.isRainingToday === true
+                    ? <div className="rains-text">Yes, it will rain today!</div>
+                    : <div className="rains-text">No, it will not rain today :(</div>
+                }
+              </div>
             </div>
           </div>
         ) : ('')}
