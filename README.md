@@ -1,7 +1,6 @@
 # rain-app
 
 TODO(emmastrickland): write description
-I'm going to write something here...
 
 ## Api
 
