@@ -83,6 +83,12 @@ main {
   text-shadow: 1px 1px 1px rgb(126, 126, 126); 
 }
 
+.spinner {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;

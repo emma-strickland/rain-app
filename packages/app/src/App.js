@@ -1,12 +1,14 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import config from './config';
+import ReactLoading from 'react-loading';
 
 const rainAudio = new Audio("./rain.mp3");
 
 function App() {
   const [zipCode, setZipCode] = useState('');
   const [response, setResponse] = useState();
+  const [loading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!response) return;
@@ -17,17 +19,24 @@ function App() {
     }
   }, [response]);
 
-  const search = evt => {
-    if (evt.key === "Enter") {
-      fetch(`${config.API_BASE_URL}/rainData?zip=${zipCode}`)
-        .then(res => res.json())
-        .then(result => {
-          setResponse(result);
-        }).catch(error => {
-          console.log('error: ', error);
-        });
-    };
-  }
+  useEffect(() => {
+    if (zipCode && zipCode.length === 5) {
+      search();
+    }
+  }, [zipCode])
+
+  const search = () => {
+    setIsLoading(true);
+    fetch(`${config.API_BASE_URL}/rainData?zip=${zipCode}`)
+      .then(res => res.json())
+      .then(result => {
+        setIsLoading(false);
+        setResponse(result);
+      }).catch(error => {
+        setIsLoading(false);
+        console.log('error: ', error);
+      });
+  };
 
   return (
     <div className="App">
@@ -39,10 +48,12 @@ function App() {
             placeholder="Enter zip code"
             onChange={e => setZipCode(e.target.value)}
             value={zipCode}
-            onKeyPress={search}
           />
         </div>
-        {(typeof response != "undefined") ? (
+        <div className="spinner">
+          <ReactLoading type="spin" hidden={!loading} />
+        </div>
+        {(typeof response != "undefined" && !loading) ? (
           <div>
             <div className="location-box">
               <div className="location">{response.city}, {response.state}</div>
