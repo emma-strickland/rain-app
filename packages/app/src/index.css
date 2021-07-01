@@ -49,6 +49,14 @@ main {
   animation: fadein 0.5s;
 }
 
+.error-message {
+  font-size: 16px;
+  font-weight: 150;
+  padding: 32px;
+  text-shadow: 1px 1px 1px rgb(92, 92, 92);
+  background-color: rgb(223, 193, 193, 0.5);
+}
+
 .location-box .location {
   font-size: 30px;
   font-weight: 150;

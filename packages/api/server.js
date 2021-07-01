@@ -10,6 +10,9 @@ dotenv.config();
 const OPEN_WEATHER_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
 const ZIP_CODE_API_BASE_URL = "https://www.zipcodeapi.com/rest/";
 
+// Error messages
+const ERROR_GENERAL = "There was an error fetching weather data for your zip code. Try again later.";
+
 const PORT = process.env.PORT || 4000;
 
 const app = express();
@@ -31,6 +34,14 @@ const getOpenWeatherUrl = (lat, lng) => {
     url += `lat=${lat}&lon=${lng}`;
     url += `&exclude=current,minutely,hourly,alerts&appid=${process.env.OPEN_WEATHER_API_KEY}`;
     return url;
+}
+
+const makeError = () => {
+    return {
+        error: {
+            message: ERROR_GENERAL
+        }
+    }
 }
 
 app.get("/rainData", (req, res) => {
@@ -56,15 +67,13 @@ app.get("/rainData", (req, res) => {
                     });
                 })
                 .catch(error => {
-                    res.json({
-                        error: error
-                    });
+                    console.log('Open weather API error: ', error);
+                    res.json(makeError());
                 })
         })
         .catch(error => {
-            res.json({
-                error: error
-            });
+            console.log('Zip code API error: ', error);
+            res.json(makeError());
         });
 });
 
