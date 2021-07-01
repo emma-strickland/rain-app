@@ -18,6 +18,8 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 app.use(cors());
 
+let zipCodeCache = {};
+
 const isRaining = openWeatherResponse => {
     let possibleRains = ["rain", "thunderstorm", "heavy rain", "light rain"]
     for (let key in openWeatherResponse) {
@@ -44,6 +46,24 @@ const makeError = () => {
     }
 }
 
+const getWeather = (zipCodeResponse, callback) => {
+    let city = zipCodeResponse.data.city;
+    let state = zipCodeResponse.data.state;
+    axios.get(getOpenWeatherUrl(zipCodeResponse.data.lat, zipCodeResponse.data.lng))
+        .then(response => {
+            let isRainingToday = isRaining(response.data);
+            callback({
+                city: city,
+                state: state,
+                isRainingToday: isRainingToday
+            })
+        })
+        .catch(error => {
+            console.log('Open weather API error: ', error);
+            callback(makeError());
+        })
+}
+
 app.get("/rainData", (req, res) => {
     let zip = req.query.zip;
     if (!zip) {
@@ -52,24 +72,23 @@ app.get("/rainData", (req, res) => {
         })
     }
 
+    let weatherResultCallback = (weatherResult) => {
+        res.json(weatherResult)
+    };
+
+    if (zip in zipCodeCache) {
+        console.log(`Found zip code <${zip}> in cache!`);
+        let zipCodeResponse = zipCodeCache[zip];
+        getWeather(zipCodeResponse, weatherResultCallback);
+        return;
+    }
+
+    console.log(`Zip code <${zip}> not in cache`);
     axios.get(`${ZIP_CODE_API_BASE_URL}${process.env.ZIP_CODE_API_KEY}/info.json/${zip}/degrees`)
-        .then(response => {
+        .then(zipCodeResponse => {
             console.log(response.data);
-            let city = response.data.city;
-            let state = response.data.state;
-            return axios.get(getOpenWeatherUrl(response.data.lat, response.data.lng))
-                .then(response => {
-                    let isRainingToday = isRaining(response.data);
-                    res.json({
-                        city: city,
-                        state: state,
-                        isRainingToday: isRainingToday
-                    });
-                })
-                .catch(error => {
-                    console.log('Open weather API error: ', error);
-                    res.json(makeError());
-                })
+            zipCodeCache[zip] = zipCodeResponse;
+            getWeather(zipCodeResponse, weatherResultCallback);
         })
         .catch(error => {
             console.log('Zip code API error: ', error);
