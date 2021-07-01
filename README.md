@@ -6,23 +6,21 @@ TODO(emmastrickland): write description
 
 ### Usage
 
-1.  Create a `.env` file in `./api` and set your [Open Weather Map](https://openweathermap.org/api) and [Zip Code](https://www.zipcodeapi.com/) API Keys. Please refer to `./api/.env.example`.
+1.  Create a `.env` file in `./packages/api` and set your [Open Weather Map](https://openweathermap.org/api) and [Zip Code](https://www.zipcodeapi.com/) API Keys. Please refer to `./packages/api/.env.example`.
 
 2.  Start the server:
     ```
-    cd api
-    npm install
-    npm start
+    yarn backend:install
+    yarn backend:start
     ```
 
 ## App
 
 ### Usage
-1.  Configure dev and prod `API_BASE_URL` variables in `./app/config.js`.
+1.  Configure dev and prod `API_BASE_URL` variables in `./packages/app/config.js`.
 
 2.  Start the frontend app:
     ```
-    cd app
-    npm install
-    npm start
+    yarn frontend:install
+    yarn frontend:start
     ```
