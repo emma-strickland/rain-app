@@ -1,5 +1,5 @@
 const PROD = {
-    API_BASE_URL: 'TODO'
+    API_BASE_URL: 'https://rain-app-api.herokuapp.com'
 };
 
 const DEV = {
